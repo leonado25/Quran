@@ -1,7 +1,6 @@
 // เมื่อหน้าเว็บโหลดเสร็จ
 document.addEventListener('DOMContentLoaded', function() {
     loadSurahs();
-    setupSearch();
     setupAnimations();
 });
 
@@ -17,11 +16,14 @@ function loadSurahs() {
 
 // ฟังก์ชันสร้างองค์ประกอบซูเราะห์
 function createSurahElement(surah) {
-    const surahDiv = document.createElement('div');
-    surahDiv.className = 'surah-item';
-    surahDiv.setAttribute('data-surah-number', surah.number);
+    const surahLink = document.createElement('a');
+    surahLink.href = `surah.html?id=${surah.number}`;
+    surahLink.className = 'surah-item';
+    surahLink.setAttribute('data-surah-number', surah.number);
+    surahLink.style.textDecoration = 'none';
+    surahLink.style.color = 'inherit';
     
-    surahDiv.innerHTML = `
+    surahLink.innerHTML = `
         <div class="surah-number">${surah.number}</div>
         <div class="surah-info">
             <div class="surah-name">${surah.nameThai} (${surah.nameArabic})</div>
@@ -29,106 +31,7 @@ function createSurahElement(surah) {
         </div>
     `;
     
-    // เพิ่ม event listener สำหรับการคลิก
-    surahDiv.addEventListener('click', function() {
-        showSurahDetails(surah);
-    });
-    
-    return surahDiv;
-}
-
-// ฟังก์ชันแสดงรายละเอียดซูเราะห์
-function showSurahDetails(surah) {
-    const details = `
-        ซูเราะห์ที่ ${surah.number}: ${surah.nameThai} (${surah.nameArabic})
-        ความหมาย: ${surah.meaning}
-        สถานที่ประทาน: ${surah.place}
-        จำนวนอายะห์: ${surah.verses}
-    `;
-    
-    alert(details);
-}
-
-// ฟังก์ชันตั้งค่าการค้นหา
-function setupSearch() {
-    const searchBox = document.getElementById('searchBox');
-    
-    searchBox.addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase().trim();
-        filterSurahs(searchTerm);
-    });
-    
-    // เคลียร์การค้นหาเมื่อกด Escape
-    searchBox.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            this.value = '';
-            filterSurahs('');
-        }
-    });
-}
-
-// ฟังก์ชันกรองซูเราะห์ตามคำค้น
-function filterSurahs(searchTerm) {
-    const surahItems = document.querySelectorAll('.surah-item');
-    let visibleCount = 0;
-    
-    surahItems.forEach(item => {
-        const surahName = item.querySelector('.surah-name').textContent.toLowerCase();
-        const surahDetails = item.querySelector('.surah-details').textContent.toLowerCase();
-        const surahNumber = item.getAttribute('data-surah-number');
-        
-        const isVisible = searchTerm === '' || 
-                         surahName.includes(searchTerm) || 
-                         surahDetails.includes(searchTerm) ||
-                         surahNumber === searchTerm;
-        
-        if (isVisible) {
-            item.style.display = 'flex';
-            item.style.animation = `fadeIn 0.3s ease-in-out ${visibleCount * 0.05}s both`;
-            visibleCount++;
-        } else {
-            item.style.display = 'none';
-        }
-    });
-    
-    // แสดงข้อความเมื่อไม่พบผลลัพธ์
-    showSearchResults(visibleCount, searchTerm);
-}
-
-// ฟังก์ชันแสดงผลลัพธ์การค้นหา
-function showSearchResults(count, searchTerm) {
-    let existingMessage = document.getElementById('search-message');
-    
-    if (existingMessage) {
-        existingMessage.remove();
-    }
-    
-    if (searchTerm && count === 0) {
-        const message = document.createElement('div');
-        message.id = 'search-message';
-        message.className = 'search-message';
-        message.innerHTML = `
-            <div style="text-align: center; padding: 40px; color: #666;">
-                <h3>ไม่พบซูเราะห์ที่ค้นหา</h3>
-                <p>ลองค้นหาด้วยคำอื่น เช่น ชื่อซูเราะห์, ความหมาย, หรือหมายเลข</p>
-            </div>
-        `;
-        
-        const surahList = document.getElementById('surahList');
-        surahList.appendChild(message);
-    } else if (searchTerm && count > 0) {
-        const message = document.createElement('div');
-        message.id = 'search-message';
-        message.className = 'search-message';
-        message.innerHTML = `
-            <div style="text-align: center; padding: 20px; color: #667eea; font-weight: bold;">
-                พบ ${count} ซูเราะห์ที่ตรงกับการค้นหา "${searchTerm}"
-            </div>
-        `;
-        
-        const surahList = document.getElementById('surahList');
-        surahList.insertBefore(message, surahList.firstChild);
-    }
+    return surahLink;
 }
 
 // ฟังก์ชันตั้งค่า animations
