@@ -1,12 +1,19 @@
-// เมื่อหน้าเว็บโหลดเสร็จ
+// เมื่อหน้าเว็บโหลดเสร็จ - เวอร์ชันง่าย
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM loaded, loading surahs...');
-    loadSurahs();
-    setupAnimations();
+    console.log('🔥 เริ่มโหลดหน้าเว็บ...');
+    console.log('🔥 ตรวจสอบข้อมูล surahsData:', typeof surahsData);
+    
+    // รอให้ข้อมูลโหลด
+    setTimeout(function() {
+        console.log('🔥 เรียกฟังก์ชัน loadSurahs...');
+        loadSurahs();
+    }, 100);
 });
 
-// ฟังก์ชันโหลดซูเราะห์ทั้งหมด
+// ฟังก์ชันโหลดซูเราะห์ทั้งหมด - เวอร์ชันง่าย
 function loadSurahs() {
+    console.log('เริ่มโหลดซูเราะห์...');
+    
     const surahList = document.getElementById('surahList');
     
     if (!surahList) {
@@ -16,26 +23,45 @@ function loadSurahs() {
     
     if (typeof surahsData === 'undefined') {
         console.error('ไม่พบข้อมูล surahsData');
+        surahList.innerHTML = '<div style="padding: 20px; text-align: center; color: red; grid-column: 1/-1;">❌ ไม่พบข้อมูลซูเราะห์ ตรวจสอบไฟล์ data.js</div>';
         return;
     }
     
-    console.log('กำลังโหลดซูเราะห์จำนวน:', surahsData.length);
+    console.log('พบข้อมูลซูเราะห์:', surahsData.length, 'ซูเราะห์');
     
-    // เคลียร์เนื้อหาเดิม
-    surahList.innerHTML = '';
+    // ลบข้อความ loading และซูเราะห์ตัวอย่าง
+    const loadingMessage = document.getElementById('loading-message');
+    if (loadingMessage) {
+        loadingMessage.remove();
+    }
     
-    surahsData.forEach((surah, index) => {
+    // ลบซูเราะห์ตัวอย่างที่มีอยู่
+    const existingSurahs = surahList.querySelectorAll('.surah-item');
+    existingSurahs.forEach(item => item.remove());
+    
+    // สร้างซูเราะห์ทีละอัน
+    for (let i = 0; i < surahsData.length; i++) {
+        const surah = surahsData[i];
         const surahElement = createSurahElement(surah);
         surahList.appendChild(surahElement);
-        
-        // เพิ่ม delay เล็กน้อยในการแสดงผล
-        setTimeout(() => {
-            surahElement.style.opacity = '1';
-            surahElement.style.transform = 'translateY(0)';
-        }, index * 50);
-    });
+    }
     
-    console.log('โหลดซูเราะห์เสร็จแล้ว');
+    console.log('โหลดซูเราะห์เสร็จแล้ว จำนวน:', surahList.querySelectorAll('.surah-item').length);
+    
+    // เพิ่มข้อความแสดงสถานะ
+    const statusDiv = document.createElement('div');
+    statusDiv.style.gridColumn = '1/-1';
+    statusDiv.style.textAlign = 'center';
+    statusDiv.style.padding = '20px';
+    statusDiv.style.color = '#27ae60';
+    statusDiv.style.fontWeight = 'bold';
+    statusDiv.innerHTML = '✅ โหลดซูเราะห์ทั้งหมด 114 ซูเราะห์เรียบร้อยแล้ว';
+    surahList.appendChild(statusDiv);
+    
+    // ลบข้อความสถานะหลัง 3 วินาที
+    setTimeout(() => {
+        statusDiv.remove();
+    }, 3000);
 }
 
 // ฟังก์ชันสร้างองค์ประกอบซูเราะห์
