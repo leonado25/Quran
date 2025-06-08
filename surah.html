@@ -1,0 +1,150 @@
+<!-- // surah.html -->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ซูเราะฮ์ อัลฟาติหะฮ์ - Al-Qur'an Online</title>
+  <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/4/47/Islam_crescent.svg" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fdfdfd;
+      color: #222;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #116466;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      padding: 2rem 1rem;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .ayah {
+      font-size: 1.5rem;
+      text-align: center;
+      margin: 1.5rem 0;
+      padding: 1rem;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+
+    .highlight {
+      background-color: #d0f0e0;
+      border: 2px solid #116466;
+    }
+
+    .btn {
+      background-color: #116466;
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn:hover {
+      background-color: #0e4e50;
+    }
+
+    .back-link {
+      display: block;
+      margin-top: 2rem;
+      text-align: center;
+      color: #116466;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #777;
+      margin-top: 3rem;
+      padding: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🕋 ซูเราะฮ์ อัลฟาติหะฮ์ (Al-Fatihah)</h1>
+    <p>บทที่ 1 จากอัลกุรอาน พร้อมเสียงอ่าน</p>
+  </header>
+
+  <div class="container">
+    <button class="btn" onclick="startReading()">▶️ เริ่มอ่าน</button>
+
+    <div id="verses">
+      <div class="ayah" id="ayah1">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+      <div class="ayah" id="ayah2">ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ</div>
+      <div class="ayah" id="ayah3">ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
+      <div class="ayah" id="ayah4">مَٰلِكِ يَوْمِ ٱلدِّينِ</div>
+      <div class="ayah" id="ayah5">إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ</div>
+      <div class="ayah" id="ayah6">ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ</div>
+      <div class="ayah" id="ayah7">صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ</div>
+    </div>
+
+    <a href="index.html" class="back-link">← กลับหน้าแรก</a>
+  </div>
+
+  <footer>
+    &copy; 2025 Qur'an Online | เสียงอ่านโดย Mishary Rashid Alafasy
+  </footer>
+
+  <script>
+    const audioBase = "https://everyayah.com/data/Mishari_Rashid_Alafasy_128kbps/";
+    const surah = "001"; // ซูเราะฮ์ที่ 1
+
+    const ayahCount = 7;
+    let currentAyah = 1;
+
+    function startReading() {
+      currentAyah = 1;
+      playAyah(currentAyah);
+    }
+
+    function playAyah(num) {
+      highlightAyah(num);
+      const numStr = num.toString().padStart(3, '0');
+      const audio = new Audio(`${audioBase}${surah}${numStr}.mp3`);
+      audio.play();
+
+      audio.onended = () => {
+        unhighlightAyah(num);
+        if (num < ayahCount) {
+          playAyah(num + 1);
+        }
+      };
+    }
+
+    function highlightAyah(num) {
+      document.getElementById(`ayah${num}`).classList.add("highlight");
+    }
+
+    function unhighlightAyah(num) {
+      document.getElementById(`ayah${num}`).classList.remove("highlight");
+    }
+  </script>
+
+</body>
+</html>
+<!-- // end of surah.html -->
