@@ -1,150 +1,320 @@
-<!-- // surah.html -->
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ซูเราะฮ์ อัลฟาติหะฮ์ - Al-Qur'an Online</title>
-  <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/4/47/Islam_crescent.svg" />
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #fdfdfd;
-      color: #222;
-      line-height: 1.6;
-    }
-
-    header {
-      background-color: #116466;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-    }
-
-    .container {
-      max-width: 700px;
-      margin: auto;
-      padding: 2rem 1rem;
-    }
-
-    h1 {
-      font-size: 1.8rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .ayah {
-      font-size: 1.5rem;
-      text-align: center;
-      margin: 1.5rem 0;
-      padding: 1rem;
-      border-radius: 8px;
-      transition: background 0.3s ease;
-    }
-
-    .highlight {
-      background-color: #d0f0e0;
-      border: 2px solid #116466;
-    }
-
-    .btn {
-      background-color: #116466;
-      color: white;
-      padding: 0.6rem 1.2rem;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
-      margin-bottom: 1.5rem;
-    }
-
-    .btn:hover {
-      background-color: #0e4e50;
-    }
-
-    .back-link {
-      display: block;
-      margin-top: 2rem;
-      text-align: center;
-      color: #116466;
-      text-decoration: none;
-    }
-
-    .back-link:hover {
-      text-decoration: underline;
-    }
-
-    footer {
-      text-align: center;
-      font-size: 0.9rem;
-      color: #777;
-      margin-top: 3rem;
-      padding: 1rem;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายละเอียดซูเราะห์ - โปรเจคเรียนรู้อัลกุรอ่าน</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .surah-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 40px 20px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .surah-arabic {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .surah-thai {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .surah-meaning {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        .surah-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .detail-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .detail-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+        
+        .detail-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .content-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+            backdrop-filter: blur(10px);
+        }
+        
+        .navigation-btns {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .nav-btn {
+            flex: 1;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #667eea;
+            text-align: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        
+        .error {
+            text-align: center;
+            padding: 60px 20px;
+            color: #e74c3c;
+            background: #ffeaa7;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .verses-container {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .verse-sample {
+            font-style: italic;
+            color: #555;
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+    </style>
 </head>
 <body>
-
-  <header>
-    <h1>🕋 ซูเราะฮ์ อัลฟาติหะฮ์ (Al-Fatihah)</h1>
-    <p>บทที่ 1 จากอัลกุรอาน พร้อมเสียงอ่าน</p>
-  </header>
-
-  <div class="container">
-    <button class="btn" onclick="startReading()">▶️ เริ่มอ่าน</button>
-
-    <div id="verses">
-      <div class="ayah" id="ayah1">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-      <div class="ayah" id="ayah2">ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ</div>
-      <div class="ayah" id="ayah3">ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
-      <div class="ayah" id="ayah4">مَٰلِكِ يَوْمِ ٱلدِّينِ</div>
-      <div class="ayah" id="ayah5">إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ</div>
-      <div class="ayah" id="ayah6">ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ</div>
-      <div class="ayah" id="ayah7">صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ</div>
+    <div class="container">
+        <a href="index.html" class="back-btn">
+            ← กลับสู่หน้าหลัก
+        </a>
+        
+        <div id="loading" class="loading">
+            <h2>กำลังโหลดข้อมูลซูเราะห์...</h2>
+        </div>
+        
+        <div id="error" class="error" style="display: none;">
+            <h2>เกิดข้อผิดพลาด</h2>
+            <p>ไม่พบข้อมูลซูเราะห์ที่ระบุ กรุณาตรวจสอบหมายเลขซูเราะห์</p>
+        </div>
+        
+        <div id="surah-content" style="display: none;">
+            <!-- เนื้อหาซูเราะห์จะถูกโหลดที่นี่ -->
+        </div>
     </div>
 
-    <a href="index.html" class="back-link">← กลับหน้าแรก</a>
-  </div>
-
-  <footer>
-    &copy; 2025 Qur'an Online | เสียงอ่านโดย Mishary Rashid Alafasy
-  </footer>
-
-  <script>
-    const audioBase = "https://everyayah.com/data/Mishari_Rashid_Alafasy_128kbps/";
-    const surah = "001"; // ซูเราะฮ์ที่ 1
-
-    const ayahCount = 7;
-    let currentAyah = 1;
-
-    function startReading() {
-      currentAyah = 1;
-      playAyah(currentAyah);
-    }
-
-    function playAyah(num) {
-      highlightAyah(num);
-      const numStr = num.toString().padStart(3, '0');
-      const audio = new Audio(`${audioBase}${surah}${numStr}.mp3`);
-      audio.play();
-
-      audio.onended = () => {
-        unhighlightAyah(num);
-        if (num < ayahCount) {
-          playAyah(num + 1);
+    <script src="data.js"></script>
+    <script>
+        // ดึง ID ซูเราะห์จาก URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const surahId = parseInt(urlParams.get('id'));
+        
+        // โหลดข้อมูลซูเราะห์
+        function loadSurahData() {
+            const loading = document.getElementById('loading');
+            const error = document.getElementById('error');
+            const content = document.getElementById('surah-content');
+            
+            // ตรวจสอบว่า ID ถูกต้องหรือไม่
+            if (!surahId || surahId < 1 || surahId > 114) {
+                loading.style.display = 'none';
+                error.style.display = 'block';
+                return;
+            }
+            
+            // ค้นหาข้อมูลซูเราะห์
+            const surah = surahsData.find(s => s.number === surahId);
+            
+            if (!surah) {
+                loading.style.display = 'none';
+                error.style.display = 'block';
+                return;
+            }
+            
+            // อัปเดต title
+            document.title = `${surah.nameThai} (${surah.nameArabic}) - โปรเจคเรียนรู้อัลกุรอ่าน`;
+            
+            // สร้างเนื้อหา
+            content.innerHTML = createSurahContent(surah);
+            
+            // แสดงเนื้อหา
+            loading.style.display = 'none';
+            content.style.display = 'block';
         }
-      };
-    }
-
-    function highlightAyah(num) {
-      document.getElementById(`ayah${num}`).classList.add("highlight");
-    }
-
-    function unhighlightAyah(num) {
-      document.getElementById(`ayah${num}`).classList.remove("highlight");
-    }
-  </script>
-
+        
+        // สร้างเนื้อหาซูเราะห์
+        function createSurahContent(surah) {
+            const prevSurah = surah.number > 1 ? surah.number - 1 : null;
+            const nextSurah = surah.number < 114 ? surah.number + 1 : null;
+            
+            return `
+                <div class="surah-header fade-in">
+                    <div class="surah-arabic">${surah.nameArabic}</div>
+                    <div class="surah-thai">${surah.nameThai}</div>
+                    <div class="surah-meaning">ความหมาย: ${surah.meaning}</div>
+                    
+                    <div class="surah-details-grid">
+                        <div class="detail-item">
+                            <div class="detail-label">หมายเลขซูเราะห์</div>
+                            <div class="detail-value">${surah.number}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">สถานที่ประทาน</div>
+                            <div class="detail-value">${surah.place}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">จำนวนอายะห์</div>
+                            <div class="detail-value">${surah.verses}</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-card fade-in">
+                    <h2 class="section-title">ข้อมูลเพิ่มเติม</h2>
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <h3>📍 สถานที่และบริบท</h3>
+                            <p>ซูเราะห์${surah.nameThai}ประทานลงมาที่${surah.place} ${getSurahContext(surah)}</p>
+                        </div>
+                        
+                        <div class="info-card">
+                            <h3>📊 สถิติ</h3>
+                            <p>มีจำนวน ${surah.verses} อายะห์ เป็นซูเราะห์ที่ ${surah.number} ของอัลกุรอ่าน ${getRelativeSize(surah.verses)}</p>
+                        </div>
+                        
+                        <div class="info-card">
+                            <h3>🎯 ความสำคัญ</h3>
+                            <p>${getSurahImportance(surah)}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="verses-container">
+                        <h3 style="text-align: center; margin-bottom: 15px;">📖 ตัวอย่างการอ่าน</h3>
+                        <div class="verse-sample">
+                            ${getVerseExample(surah)}
+                        </div>
+                        <p style="text-align: center; color: #666; font-size: 0.9rem; margin-top: 15px;">
+                            * ในการศึกษาที่สมบูรณ์ควรอ่านจากแหล่งข้อมูลที่เชื่อถือได้
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="navigation-btns">
+                    ${prevSurah ? `<a href="surah.html?id=${prevSurah}" class="nav-btn">← ซูเราะห์ที่ ${prevSurah}</a>` : '<div class="nav-btn" style="opacity: 0.3;">ซูเราะห์แรกแล้ว</div>'}
+                    ${nextSurah ? `<a href="surah.html?id=${nextSurah}" class="nav-btn">ซูเราะห์ที่ ${nextSurah} →</a>` : '<div class="nav-btn" style="opacity: 0.3;">ซูเราะห์สุดท้ายแล้ว</div>'}
+                </div>
+            `;
+        }
+        
+        // ฟังก์ชันสำหรับข้อมูลเพิ่มเติม
+        function getSurahContext(surah) {
+            return surah.place === 'มักกะห์' ? 
+                'ในช่วงแรกของการประกาศศาสนา เน้นเรื่องความเชื่อและหลักคำสอนพื้นฐาน' :
+                'หลังจากการอพยพไปมะดีนะห์ เน้นเรื่องกฎหมายและระบบสังคม';
+        }
+        
+        function getRelativeSize(verses) {
+            if (verses >= 200) return 'ซึ่งถือว่ายาวมาก';
+            if (verses >= 100) return 'ซึ่งถือว่ายาวปานกลาง';
+            if (verses >= 50) return 'ซึ่งถือว่าความยาวปานกลาง';
+            if (verses >= 20) return 'ซึ่งถือว่าสั้นปานกลาง';
+            return 'ซึ่งถือว่าสั้น';
+        }
+        
+        function getSurahImportance(surah) {
+            // ข้อมูลความสำคัญเฉพาะของซูเราะห์ที่โดดเด่น
+            const specialSurahs = {
+                1: 'เป็นซูเราะห์เปิดอัลกุรอ่าน อ่านในทุกรอบของการละหมาด',
+                2: 'ซูเราะห์ที่ยาวที่สุด เนื้อหาครอบคลุมหลากหลายเรื่อง',
+                36: 'เรียกว่า "หัวใจของอัลกุรอ่าน" นิยมอ่านในงานศพ',
+                55: 'เน้นการนับพระคุณของอัลลอฮ์ มีวลี "فبأي آلاء ربكما تكذبان" ซ้ำหลายครั้ง',
+                112: 'บรรยายความเป็นหนึ่งเดียวของอัลลอฮ์ สั้นกระชับแต่มีนัยสำคัญ',
+                113: 'ซูเราะห์สำหรับขอความคุ้มครองจากความชั่วร้าย',
+                114: 'ซูเราะห์สุดท้ายของอัลกุรอ่าน ขอความคุ้มครองจากซัยฏอน'
+            };
+            
+            return specialSurahs[surah.number] || 
+                `ซูเราะห์นี้มีบทบาทสำคัญในการสอนหลักธรรมอิสลาม เป็นส่วนหนึ่งของคำสอนที่สมบูรณ์แบบ`;
+        }
+        
+        function getVerseExample(surah) {
+            if (surah.number === 1) {
+                return 'بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ<br>ด้วยพระนามของอัลลอฮ์ ผู้ทรงเมตตา ผู้ทรงเมตตาเสมอ';
+            }
+            return 'อาย์ยะฮ์แรก: بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ<br>ด้วยพระนามของอัลลอฮ์ ผู้ทรงเมตตา ผู้ทรงเมตตาเสมอ';
+        }
+        
+        // เรียกใช้เมื่อหน้าเว็บโหลดเสร็จ
+        document.addEventListener('DOMContentLoaded', loadSurahData);
+    </script>
 </body>
 </html>
-<!-- // end of surah.html -->
