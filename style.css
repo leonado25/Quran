@@ -165,22 +165,7 @@ body {
     font-size: 0.9rem;
 }
 
-.search-box {
-    width: 100%;
-    padding: 15px 20px;
-    border: 2px solid #e9ecef;
-    border-radius: 50px;
-    font-size: 1rem;
-    margin-bottom: 20px;
-    transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.9);
-}
 
-.search-box:focus {
-    outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 20px rgba(102, 126, 234, 0.2);
-}
 
 .stats-container {
     display: flex;
@@ -229,7 +214,7 @@ body {
 
 .fade-in {
     animation: fadeIn 0.8s ease-in;
-}0
+}
 
 @keyframes fadeIn {
     from { 
