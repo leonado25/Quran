@@ -1,5 +1,6 @@
 // เมื่อหน้าเว็บโหลดเสร็จ
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, loading surahs...');
     loadSurahs();
     setupAnimations();
 });
@@ -8,10 +9,33 @@ document.addEventListener('DOMContentLoaded', function() {
 function loadSurahs() {
     const surahList = document.getElementById('surahList');
     
-    surahsData.forEach(surah => {
+    if (!surahList) {
+        console.error('ไม่พบ element surahList');
+        return;
+    }
+    
+    if (typeof surahsData === 'undefined') {
+        console.error('ไม่พบข้อมูล surahsData');
+        return;
+    }
+    
+    console.log('กำลังโหลดซูเราะห์จำนวน:', surahsData.length);
+    
+    // เคลียร์เนื้อหาเดิม
+    surahList.innerHTML = '';
+    
+    surahsData.forEach((surah, index) => {
         const surahElement = createSurahElement(surah);
         surahList.appendChild(surahElement);
+        
+        // เพิ่ม delay เล็กน้อยในการแสดงผล
+        setTimeout(() => {
+            surahElement.style.opacity = '1';
+            surahElement.style.transform = 'translateY(0)';
+        }, index * 50);
     });
+    
+    console.log('โหลดซูเราะห์เสร็จแล้ว');
 }
 
 // ฟังก์ชันสร้างองค์ประกอบซูเราะห์
@@ -22,6 +46,9 @@ function createSurahElement(surah) {
     surahLink.setAttribute('data-surah-number', surah.number);
     surahLink.style.textDecoration = 'none';
     surahLink.style.color = 'inherit';
+    surahLink.style.opacity = '0';
+    surahLink.style.transform = 'translateY(20px)';
+    surahLink.style.transition = 'all 0.3s ease, opacity 0.6s ease, transform 0.6s ease';
     
     surahLink.innerHTML = `
         <div class="surah-number">${surah.number}</div>
@@ -51,14 +78,13 @@ function setupAnimations() {
         });
     }, observerOptions);
 
-    // สังเกตการณ์ทุก surah items
-    const surahItems = document.querySelectorAll('.surah-item');
-    surahItems.forEach((item, index) => {
-        item.style.opacity = '0';
-        item.style.transform = 'translateY(20px)';
-        item.style.transition = `opacity 0.6s ease ${index * 0.05}s, transform 0.6s ease ${index * 0.05}s`;
-        observer.observe(item);
-    });
+    // รอสักครู่แล้วจึงเริ่ม observe (เพื่อให้ elements ถูกสร้างก่อน)
+    setTimeout(() => {
+        const surahItems = document.querySelectorAll('.surah-item');
+        surahItems.forEach((item, index) => {
+            observer.observe(item);
+        });
+    }, 100);
 }
 
 // ฟังก์ชันสำหรับการนำทางด่วน
@@ -102,6 +128,11 @@ function scrollToSurah(number) {
 
 // ฟังก์ชันสำหรับสถิติ
 function updateStats() {
+    if (typeof surahsData === 'undefined') {
+        console.log('ข้อมูลซูเราะห์ยังไม่โหลด');
+        return;
+    }
+    
     const makkahCount = surahsData.filter(s => s.place === 'มักกะห์').length;
     const madinahCount = surahsData.filter(s => s.place === 'มะดีนะห์').length;
     const totalVerses = surahsData.reduce((sum, s) => sum + s.verses, 0);
@@ -113,7 +144,27 @@ function updateStats() {
 }
 
 // เรียกใช้ฟังก์ชันสถิติ
-updateStats();
+setTimeout(updateStats, 500);
 
 // เพิ่มการนำทางด่วนหลังจากโหลดหน้าเว็บ 3 วินาที
 setTimeout(quickNavigation, 3000);
+
+// ฟังก์ชันตรวจสอบว่าข้อมูลโหลดหรือยัง
+function checkDataLoaded() {
+    if (typeof surahsData === 'undefined') {
+        console.error('ข้อมูลซูเราะห์ไม่ได้โหลด - ตรวจสอบไฟล์ data.js');
+        document.getElementById('surahList').innerHTML = `
+            <div style="text-align: center; padding: 40px; color: #e74c3c; background: #ffeaa7; border-radius: 10px;">
+                <h3>⚠️ เกิดข้อผิดพลาด</h3>
+                <p>ไม่สามารถโหลดข้อมูลซูเราะห์ได้ กรุณาตรวจสอบไฟล์ data.js</p>
+            </div>
+        `;
+        return false;
+    }
+    return true;
+}
+
+// ตรวจสอบข้อมูลหลังจาก DOM โหลดเสร็จ
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(checkDataLoaded, 100);
+});
