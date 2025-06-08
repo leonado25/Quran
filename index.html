@@ -1,1 +1,157 @@
+<!-- // index.html -->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Al-Qur'an Online</title>
+  <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/4/47/Islam_crescent.svg" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fdfdfd;
+      color: #222;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #116466;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 1rem;
+    }
+
+    .intro {
+      background-color: #eef5f4;
+      border-left: 5px solid #116466;
+      padding: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .surah-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .surah-table th,
+    .surah-table td {
+      border: 1px solid #ddd;
+      padding: 0.75rem;
+      text-align: left;
+    }
+
+    .surah-table th {
+      background-color: #116466;
+      color: white;
+    }
+
+    .surah-table tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    a {
+      text-decoration: none;
+      color: #116466;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #777;
+      margin-top: 3rem;
+      padding: 1rem;
+    }
+
+    .start-btn {
+      display: inline-block;
+      background-color: #116466;
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      margin: 1rem 0;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .start-btn:hover {
+      background-color: #0e4e50;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>📖 Al-Qur'an Online</h1>
+    <p>อ่านอัลกุรอานแบบมีเสียง พร้อมคำแปล</p>
+  </header>
+
+  <div class="container">
+
+    <div class="intro">
+      <h2>อัลกุรอานคืออะไร?</h2>
+      <p>
+        อัลกุรอานคือคัมภีร์ศักดิ์สิทธิ์ของศาสนาอิสลาม ประกอบด้วย 114 ซูเราะฮ์ (บท) และมากกว่า 6,000 โองการ
+        เป็นถ้อยคำของพระเจ้า (อัลลอฮ์) ที่ประทานผ่านทูตญิบรีลแก่ศาสดามุฮัมมัด เพื่อเป็นแนวทางแก่มนุษยชาติ
+      </p>
+      <a href="surah.html?id=1" class="start-btn">เริ่มอ่านซูเราะฮ์แรก →</a>
+    </div>
+
+    <h2>📜 รายชื่อซูเราะฮ์ทั้งหมด</h2>
+    <table class="surah-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>ชื่อ (ภาษาอาหรับ)</th>
+          <th>ชื่อ (อังกฤษ)</th>
+          <th>อ่าน</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>الفاتحة</td>
+          <td>Al-Fatihah</td>
+          <td><a href="surah.html?id=1">อ่านซูเราะฮ์นี้</a></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>البقرة</td>
+          <td>Al-Baqarah</td>
+          <td><a href="#">เร็ว ๆ นี้</a></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>آل عمران</td>
+          <td>Aal-E-Imran</td>
+          <td><a href="#">เร็ว ๆ นี้</a></td>
+        </tr>
+        <!-- คุณสามารถใส่เพิ่มครบ 114 ได้ภายหลัง -->
+      </tbody>
+    </table>
+
+    <footer>
+      &copy; 2025 Qur'an Online | พัฒนาโดยคุณ mppm 🕋
+    </footer>
+
+  </div>
+
+</body>
+</html>
+<!-- // end of index.html -->
 
