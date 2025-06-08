@@ -1,154 +1,70 @@
-<!-- // surah.html -->
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>ซูเราะฮ์ อัลฟาติหะฮ์ - Al-Qur'an Online</title>
-  <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/4/47/Islam_crescent.svg" />
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #fdfdfd;
-      color: #222;
-      line-height: 1.6;
-    }
-
-    header {
-      background-color: #116466;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-    }
-
-    .container {
-      max-width: 700px;
-      margin: auto;
-      padding: 2rem 1rem;
-    }
-
-    h1 {
-      font-size: 1.8rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .ayah {
-      font-size: 1.5rem;
-      text-align: center;
-      margin: 1.5rem 0;
-      padding: 1rem;
-      border-radius: 8px;
-      transition: background 0.3s ease;
-    }
-
-    .highlight {
-      background-color: #d0f0e0;
-      border: 2px solid #116466;
-    }
-
-    .btn {
-      background-color: #116466;
-      color: white;
-      padding: 0.6rem 1.2rem;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
-      margin-bottom: 1.5rem;
-    }
-
-    .btn:hover {
-      background-color: #0e4e50;
-    }
-
-    .back-link {
-      display: block;
-      margin-top: 2rem;
-      text-align: center;
-      color: #116466;
-      text-decoration: none;
-    }
-
-    .back-link:hover {
-      text-decoration: underline;
-    }
-
-    footer {
-      text-align: center;
-      font-size: 0.9rem;
-      color: #777;
-      margin-top: 3rem;
-      padding: 1rem;
-    }
+    body{font-family:sans-serif;margin:0;padding:0;background:#fdfdfd;color:#222}
+    header{background:#116466;color:#fff;padding:1rem;text-align:center}
+    .container{max-width:700px;margin:auto;padding:2rem 1rem}
+    .ayah{font-size:1.5rem;text-align:center;margin:1rem 0;padding:1rem;border-radius:8px;transition:0.3s}
+    .highlight{background:#d0f0e0;border:2px solid #116466}
+    .btn{background:#116466;color:#fff;border:none;padding:0.6rem 1.2rem;border-radius:8px;font-size:1rem;cursor:pointer}
+    .btn:hover{background:#0e4e50}
+    a.back{display:block;text-align:center;color:#116466;margin-top:2rem;text-decoration:none}
+    a.back:hover{text-decoration:underline}
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>🕋 ซูเราะฮ์ อัลฟาติหะฮ์ (Al-Fatihah)</h1>
-    <p>บทที่ 1 จากอัลกุรอาน พร้อมเสียงอ่าน</p>
-  </header>
+<header>
+  <h1>🕋 ซูเราะฮ์ อัลฟาติหะฮ์</h1>
+  <p>บทที่ 1 พร้อมเสียงอ่านของ Mishary Rashid Alafasy</p>
+</header>
 
-  <div class="container">
-    <button class="btn" onclick="startReading()">▶️ เริ่มอ่าน</button>
+<div class="container">
+  <button class="btn" onclick="loadAndPlay()">▶️ เริ่มอ่าน</button>
+  <div id="verses"></div>
+  <a href="index.html" class="back">← กลับหน้าแรก</a>
+</div>
 
-    <div id="verses">
-      <div class="ayah" id="ayah1">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-      <div class="ayah" id="ayah2">ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ</div>
-      <div class="ayah" id="ayah3">ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
-      <div class="ayah" id="ayah4">مَٰلِكِ يَوْمِ ٱلدِّينِ</div>
-      <div class="ayah" id="ayah5">إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ</div>
-      <div class="ayah" id="ayah6">ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ</div>
-      <div class="ayah" id="ayah7">صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ</div>
-    </div>
+<script>
+  async function loadAndPlay() {
+    const res = await fetch("https://api.alquran.cloud/v1/surah/1/ar.alafasy");
+    const data = await res.json();
+    const versesDiv = document.getElementById("verses");
+    versesDiv.innerHTML = "";
 
-    <a href="index.html" class="back-link">← กลับหน้าแรก</a>
-  </div>
+    const ayahs = data.data.ayahs;
+    ayahs.forEach(ayah => {
+      const d = document.createElement("div");
+      d.className = "ayah";
+      d.id = "ayah" + ayah.numberInSurah;
+      d.textContent = ayah.text;
+      versesDiv.appendChild(d);
+    });
 
-  <footer>
-    &copy; 2025 Qur'an Online | เสียงอ่านโดย Mishary Rashid Alafasy
-  </footer>
+    playSequence(ayahs);
+  }
 
-  <script>
-    // ใช้ลิงก์เสียงใหม่จาก verses.quran.com (Ayah ID 1-7)
-    const audioBase = "https://verses.quran.com/MisharyAlafasy/mp3/";
-    const ayahIDs = [1, 2, 3, 4, 5, 6, 7]; // ID จริงของโองการ
-
-    let currentIndex = 0;
-
-    function startReading() {
-      currentIndex = 0;
-      playCurrentAyah();
-    }
-
-    function playCurrentAyah() {
-      if (currentIndex >= ayahIDs.length) return;
-
-      const id = ayahIDs[currentIndex];
-      const url = `${audioBase}${id}.mp3`;
-      console.log("กำลังเล่น:", url);
-
-      highlightAyah(currentIndex + 1);
-      const audio = new Audio(url);
-      audio.play().catch(err => console.error("ไม่สามารถเล่นเสียง:", err));
-
+  function playSequence(ayahs) {
+    let idx = 0;
+    function playNext() {
+      if (idx > 0) document.getElementById("ayah" + ayahs[idx-1].numberInSurah).classList.remove("highlight");
+      if (idx >= ayahs.length) return;
+      const ayah = ayahs[idx];
+      document.getElementById("ayah" + ayah.numberInSurah).classList.add("highlight");
+      const audio = new Audio(ayah.audio);
+      audio.play();
       audio.onended = () => {
-        unhighlightAyah(currentIndex + 1);
-        currentIndex++;
-        playCurrentAyah();
+        idx++;
+        playNext();
       };
     }
-
-    function highlightAyah(index) {
-      document.getElementById(`ayah${index}`).classList.add("highlight");
-    }
-
-    function unhighlightAyah(index) {
-      document.getElementById(`ayah${index}`).classList.remove("highlight");
-    }
-  </script>
+    playNext();
+  }
+</script>
 
 </body>
 </html>
-<!-- // end of surah.html -->
