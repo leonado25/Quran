@@ -1,70 +1,86 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>ซูเราะฮ์ อัลฟาติหะฮ์ - Al-Qur'an Online</title>
-  <style>
-    body{font-family:sans-serif;margin:0;padding:0;background:#fdfdfd;color:#222}
-    header{background:#116466;color:#fff;padding:1rem;text-align:center}
-    .container{max-width:700px;margin:auto;padding:2rem 1rem}
-    .ayah{font-size:1.5rem;text-align:center;margin:1rem 0;padding:1rem;border-radius:8px;transition:0.3s}
-    .highlight{background:#d0f0e0;border:2px solid #116466}
-    .btn{background:#116466;color:#fff;border:none;padding:0.6rem 1.2rem;border-radius:8px;font-size:1rem;cursor:pointer}
-    .btn:hover{background:#0e4e50}
-    a.back{display:block;text-align:center;color:#116466;margin-top:2rem;text-decoration:none}
-    a.back:hover{text-decoration:underline}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>โปรเจคเรียนรู้อัลกุรอ่าน</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="container">
+        <header class="header fade-in">
+            <div class="islamic-symbol">☪</div>
+            <h1>โปรเจคเรียนรู้อัลกุรอ่าน</h1>
+            <p class="subtitle">القرآن الكريم - คัมภีร์อันศักดิ์สิทธิ์แห่งศาสนาอิสลาม</p>
+        </header>
 
-<header>
-  <h1>🕋 ซูเราะฮ์ อัลฟาติหะฮ์</h1>
-  <p>บทที่ 1 พร้อมเสียงอ่านของ Mishary Rashid Alafasy</p>
-</header>
+        <section class="content-section fade-in">
+            <h2 class="section-title">ข้อมูลพื้นฐานเกี่ยวกับอัลกุรอ่าน</h2>
+            
+            <div class="stats-container">
+                <div class="stat-item">
+                    <span class="stat-number">114</span>
+                    <span class="stat-label">ซูเราะห์</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">6,236</span>
+                    <span class="stat-label">อายะห์</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">77,449</span>
+                    <span class="stat-label">คำ</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">23</span>
+                    <span class="stat-label">ปี ที่ถูกประทาน</span>
+                </div>
+            </div>
 
-<div class="container">
-  <button class="btn" onclick="loadAndPlay()">▶️ เริ่มอ่าน</button>
-  <div id="verses"></div>
-  <a href="index.html" class="back">← กลับหน้าแรก</a>
-</div>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>📖 ความหมาย</h3>
+                    <p>อัลกุรอ่าน หมายถึง "การอ่าน" หรือ "สิ่งที่ถูกอ่าน" เป็นคัมภีร์ศักดิ์สิทธิ์ที่อัลลอฮ์ประทานลงมายังท่านนบีมุฮัมมัด (ซ.อ.ว.) ผ่านทางมลาอิกะห์ญิบรีล</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3>🕰️ ระยะเวลาการประทาน</h3>
+                    <p>อัลกุรอ่านถูกประทานลงมาเป็นระยะเวลา 23 ปี โดยแบ่งเป็นสองช่วง คือ มักกะห์ (13 ปี) และมะดีนะห์ (10 ปี)</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3>🌟 ความสำคัญ</h3>
+                    <p>อัลกุรอ่านเป็นหลักธรรมสูงสุดของมุสลิม เป็นแนวทางในการดำเนินชีวิต และเป็นปาฏิหาริย์ที่ยิ่งใหญ่ของท่านนบีมุฮัมมัด (ซ.อ.ว.)</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3>📚 การจัดเรียง</h3>
+                    <p>อัลกุรอ่านจัดเรียงตามความยาวของซูเราะห์ โดยเริ่มจากซูเราะห์ที่ยาวที่สุด (ยกเว้นซูเราะห์อัลฟาติหะห์) และลดหลั่นลงมา</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3>🔮 การอนุรักษ์</h3>
+                    <p>อัลกุรอ่านได้รับการอนุรักษ์อย่างสมบูรณ์แบบ ทั้งในหน้ากระดาษและในใจของผู้ท่องจำ (หาฟิษ) ตลอดมากกว่า 1,400 ปี</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3>🎵 การอ่าน</h3>
+                    <p>การอ่านอัลกุรอ่านเรียกว่า "ติลาวะห์" ซึ่งมีกฎเกณฑ์และท่วงทำนองเฉพาะ เรียกว่า "ตัจวีด" เพื่อความถูกต้องและไพเราะ</p>
+                </div>
+            </div>
+        </section>
 
-<script>
-  async function loadAndPlay() {
-    const res = await fetch("https://api.alquran.cloud/v1/surah/1/ar.alafasy");
-    const data = await res.json();
-    const versesDiv = document.getElementById("verses");
-    versesDiv.innerHTML = "";
+        <section class="content-section fade-in">
+            <h2 class="section-title">รายการซูเราะห์ทั้งหมด 114 ซูเราะห์</h2>
+            
+            <input type="text" class="search-box" placeholder="🔍 ค้นหาชื่อซูเราะห์..." id="searchBox">
+            
+            <div class="surah-list" id="surahList">
+                <!-- ซูเราะห์จะถูกโหลดจาก JavaScript -->
+            </div>
+        </section>
+    </div>
 
-    const ayahs = data.data.ayahs;
-    ayahs.forEach(ayah => {
-      const d = document.createElement("div");
-      d.className = "ayah";
-      d.id = "ayah" + ayah.numberInSurah;
-      d.textContent = ayah.text;
-      versesDiv.appendChild(d);
-    });
-
-    playSequence(ayahs);
-  }
-
-  function playSequence(ayahs) {
-    let idx = 0;
-    function playNext() {
-      if (idx > 0) document.getElementById("ayah" + ayahs[idx-1].numberInSurah).classList.remove("highlight");
-      if (idx >= ayahs.length) return;
-      const ayah = ayahs[idx];
-      document.getElementById("ayah" + ayah.numberInSurah).classList.add("highlight");
-      const audio = new Audio(ayah.audio);
-      audio.play();
-      audio.onended = () => {
-        idx++;
-        playNext();
-      };
-    }
-    playNext();
-  }
-</script>
-
+    <script src="data.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
