@@ -74,7 +74,34 @@
             <p style="text-align: center; color: #666; margin-bottom: 30px;">คลิกที่ซูเราะห์เพื่อดูรายละเอียดและเนื้อหา</p>
             
             <div class="surah-list" id="surahList">
-                <!-- ซูเราะห์จะถูกโหลดจาก JavaScript -->
+                <!-- ซูเราะห์ตัวอย่าง - ถ้าไฟล์ JavaScript ทำงาน จะถูกแทนที่ -->
+                <a href="surah.html?id=1" class="surah-item">
+                    <div class="surah-number">1</div>
+                    <div class="surah-info">
+                        <div class="surah-name">อัลฟาติหะห์ (الفاتحة)</div>
+                        <div class="surah-details">ผู้เปิด • มักกะห์ • 7 อายะห์</div>
+                    </div>
+                </a>
+                
+                <a href="surah.html?id=2" class="surah-item">
+                    <div class="surah-number">2</div>
+                    <div class="surah-info">
+                        <div class="surah-name">อัลบะเกาะเราะ (البقرة)</div>
+                        <div class="surah-details">วัวตัวเมีย • มะดีนะห์ • 286 อายะห์</div>
+                    </div>
+                </a>
+                
+                <a href="surah.html?id=3" class="surah-item">
+                    <div class="surah-number">3</div>
+                    <div class="surah-info">
+                        <div class="surah-name">อาลิ อิมรอน (آل عمران)</div>
+                        <div class="surah-details">ตระกูลอิมรอน • มะดีนะห์ • 200 อายะห์</div>
+                    </div>
+                </a>
+                
+                <div id="loading-message" style="grid-column: 1/-1; text-align: center; padding: 20px; color: #667eea;">
+                    🔄 กำลังโหลดซูเราะห์ทั้งหมด...
+                </div>
             </div>
         </section>
     </div>
