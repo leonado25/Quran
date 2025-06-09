@@ -362,7 +362,7 @@
 
         <section class="content-section">
             <h2 class="section-title">ข้อมูลพื้นฐานเกี่ยวกับอัลกุรอ่าน</h2>
-            
+
             <div class="stats-container">
                 <div class="stat-item">
                     <span class="stat-number">114</span>
@@ -383,17 +383,17 @@
                     <h3>📖 ความหมาย</h3>
                     <p>อัลกุรอ่าน หมายถึง "การอ่าน" เป็นคัมภีร์ศักดิ์สิทธิ์ที่อัลลอฮ์ประทานลงมายังท่านนบีมุฮัมมัด (ซ.อ.ว.)</p>
                 </div>
-                
+
                 <div class="info-card">
                     <h3>🕰️ ระยะเวลาการประทาน</h3>
                     <p>อัลกุรอ่านถูกประทานลงมาเป็นระยะเวลา 23 ปี โดยแบ่งเป็น มักกะห์ (13 ปี) และมะดีนะห์ (10 ปี)</p>
                 </div>
-                
+
                 <div class="info-card">
                     <h3>🌟 ความสำคัญ</h3>
                     <p>อัลกุรอ่านเป็นหลักธรรมสูงสุดของมุสลิม เป็นแนวทางในการดำเนินชีวิต</p>
                 </div>
-                
+
                 <div class="info-card">
                     <h3>🎵 การอ่าน</h3>
                     <p>การอ่านอัลกุรอ่านเรียกว่า "ติลาวะห์" มีกฎเกณฑ์เรียกว่า "ตัจวีด"</p>
@@ -404,7 +404,7 @@
         <section class="content-section">
             <h2 class="section-title">รายการซูเราะห์ทั้งหมด 114 ซูเราะห์</h2>
             <p class="intro-text">คลิกที่ซูเราะห์เพื่อเข้าสู่หน้ารายละเอียด</p>
-            
+
             <div class="surah-list" id="surahList">
                 <!-- ซูเราะห์จะถูกสร้างโดย JavaScript -->
             </div>
@@ -533,12 +533,12 @@
         // สร้างรายการซูเราะห์
         function createSurahList() {
             const surahList = document.getElementById('surahList');
-            
+
             surahs.forEach(surah => {
                 const surahItem = document.createElement('a');
                 surahItem.href = `surah-${surah.no}.html`;
                 surahItem.className = 'surah-item';
-                
+
                 surahItem.innerHTML = `
                     <div class="surah-number">${surah.no}</div>
                     <div class="surah-info">
@@ -546,7 +546,7 @@
                         <div class="surah-details">${surah.meaning} • ${surah.place} • ${surah.verses} อายะห์</div>
                     </div>
                 `;
-                
+
                 surahList.appendChild(surahItem);
             });
         }
@@ -555,7 +555,7 @@
         function toggleTheme() {
             const currentTheme = document.documentElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
+
             document.documentElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
             updateThemeButton(newTheme);
@@ -564,7 +564,7 @@
         function updateThemeButton(theme) {
             const themeIcon = document.getElementById('theme-icon');
             const themeText = document.getElementById('theme-text');
-            
+
             if (theme === 'dark') {
                 themeIcon.textContent = '☀️';
                 themeText.textContent = 'โหมดสว่าง';
