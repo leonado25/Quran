@@ -165,9 +165,15 @@
             font-size: clamp(1.3rem, 3vw, 1.8rem);
             color: var(--text-primary);
             margin-bottom: 20px;
-            text-align: center;
             border-bottom: 3px solid var(--accent-color);
             padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-title h2 {
+            margin: 0;
         }
 
         .verse-container {
@@ -184,6 +190,15 @@
             transform: translateY(-3px);
         }
 
+        .verse-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
         .verse-number {
             display: inline-flex;
             align-items: center;
@@ -195,7 +210,12 @@
             border-radius: 50%;
             font-weight: bold;
             font-size: 0.9rem;
-            margin-bottom: 15px;
+        }
+
+        .verse-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .verse-arabic {
@@ -211,10 +231,18 @@
             border-radius: 10px;
         }
 
+        .verse-transliteration-thai {
+            font-style: italic;
+            color: var(--text-secondary);
+            margin: 5px 0;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            font-weight: 500;
+        }
+
         .verse-transliteration {
             font-style: italic;
             color: var(--text-secondary);
-            margin: 10px 0;
+            margin: 5px 0;
             font-size: clamp(0.9rem, 2.5vw, 1rem);
         }
 
@@ -271,30 +299,60 @@
             cursor: not-allowed;
         }
 
-        .audio-section {
-            text-align: center;
-            margin: 20px 0;
-            padding: 20px;
-            background: var(--bg-card);
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-        }
-
         .play-btn {
             background: #28a745;
             color: white;
             border: none;
-            padding: 12px 25px;
-            border-radius: 50px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 80px;
+        }
+
+        .play-btn:hover {
+            background: #218838;
+            transform: scale(1.05);
+        }
+
+        .play-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .play-all-btn {
+            background: var(--accent-gradient);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
             font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
-        .play-btn:hover {
-            background: #218838;
-            transform: scale(1.05);
+        .play-all-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .play-all-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .audio-status {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            min-height: 20px;
+            font-style: italic;
         }
 
         @media (max-width: 768px) {
@@ -325,6 +383,17 @@
             .surah-info-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+
+            .section-title {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .verse-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
 
         @media (max-width: 480px) {
@@ -352,11 +421,6 @@
             color: #27ae60;
         }
 
-        [data-theme="dark"] .audio-section {
-            background: var(--bg-card);
-            border-color: var(--border-color);
-        }
-
         /* Animation for theme transition */
         * {
             transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
@@ -378,7 +442,7 @@
             <div class="surah-arabic">سُورَةُ الْفَاتِحَة</div>
             <div class="surah-thai">ซูเราะห์อัลฟาติหะห์</div>
             <div class="surah-meaning">ผู้เปิด • The Opening</div>
-
+            
             <div class="surah-info-grid">
                 <div class="info-item">
                     <div class="info-label">หมายเลข</div>
@@ -407,66 +471,102 @@
         </div>
 
         <div class="content-section">
-            <h2 class="section-title">📖 เนื้อหาซูเราะห์</h2>
+            <div class="section-title">
+                <h2>📖 เนื้อหาซูเราะห์</h2>
+                <button class="play-all-btn" onclick="playAllVerses()" id="playAllBtn">▶️ เล่นทั้งซูเราะห์</button>
+            </div>
+
+            <div class="audio-status" id="audioStatus"></div>
 
             <div class="verse-container">
-                <div class="verse-number">1</div>
+                <div class="verse-header">
+                    <div class="verse-number">1</div>
+                    <div class="verse-controls">
+                        <button class="play-btn" onclick="playVerse(1, 1)" id="btn-1-1">▶️ เล่น</button>
+                    </div>
+                </div>
                 <div class="verse-arabic">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
+                <div class="verse-transliteration-thai">บิสมิลลาฮิร รอหมานิร รอฮีม</div>
                 <div class="verse-transliteration">Bismillahir Rahmanir Raheem</div>
                 <div class="verse-translation">ด้วยพระนามของอัลลอฮ์ ผู้ทรงเมตตา ผู้ทรงเมตตาเสมอ</div>
             </div>
 
             <div class="verse-container">
-                <div class="verse-number">2</div>
+                <div class="verse-header">
+                    <div class="verse-number">2</div>
+                    <div class="verse-controls">
+                        <button class="play-btn" onclick="playVerse(1, 2)" id="btn-1-2">▶️ เล่น</button>
+                    </div>
+                </div>
                 <div class="verse-arabic">الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ</div>
+                <div class="verse-transliteration-thai">อัลหัมดุ ลิลลาฮิ รอบบิล อาละมีน</div>
                 <div class="verse-transliteration">Alhamdu lillahi rabbil alameen</div>
                 <div class="verse-translation">การสรรเสริญทั้งปวงเป็นของอัลลอฮ์ ผู้เป็นพระเจ้าแห่งสากลโลก</div>
             </div>
 
             <div class="verse-container">
-                <div class="verse-number">3</div>
+                <div class="verse-header">
+                    <div class="verse-number">3</div>
+                    <div class="verse-controls">
+                        <button class="play-btn" onclick="playVerse(1, 3)" id="btn-1-3">▶️ เล่น</button>
+                    </div>
+                </div>
                 <div class="verse-arabic">الرَّحْمَنِ الرَّحِيمِ</div>
+                <div class="verse-transliteration-thai">อัร รอหมานิร รอฮีม</div>
                 <div class="verse-transliteration">Ar-Rahmanir Raheem</div>
                 <div class="verse-translation">ผู้ทรงเมตตา ผู้ทรงเมตตาเสมอ</div>
             </div>
 
             <div class="verse-container">
-                <div class="verse-number">4</div>
+                <div class="verse-header">
+                    <div class="verse-number">4</div>
+                    <div class="verse-controls">
+                        <button class="play-btn" onclick="playVerse(1, 4)" id="btn-1-4">▶️ เล่น</button>
+                    </div>
+                </div>
                 <div class="verse-arabic">مَالِكِ يَوْمِ الدِّينِ</div>
+                <div class="verse-transliteration-thai">มาลิกิ เยามิด ดีน</div>
                 <div class="verse-transliteration">Maliki yawmid deen</div>
                 <div class="verse-translation">ผู้ทรงเป็นเจ้าของวันพิพากษา</div>
             </div>
 
             <div class="verse-container">
-                <div class="verse-number">5</div>
+                <div class="verse-header">
+                    <div class="verse-number">5</div>
+                    <div class="verse-controls">
+                        <button class="play-btn" onclick="playVerse(1, 5)" id="btn-1-5">▶️ เล่น</button>
+                    </div>
+                </div>
                 <div class="verse-arabic">إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ</div>
+                <div class="verse-transliteration-thai">อิยยาก่ะ นะอ์บุดุ วะ อิยยาก่ะ นะสตะอีน</div>
                 <div class="verse-transliteration">Iyyaka na'budu wa iyyaka nasta'een</div>
                 <div class="verse-translation">พระองค์เท่านั้นที่ข้าพเจ้าทั้งหลายเคารพบูชา และพระองค์เท่านั้นที่ข้าพเจ้าทั้งหลายขอความช่วยเหลือ</div>
             </div>
 
             <div class="verse-container">
-                <div class="verse-number">6</div>
+                <div class="verse-header">
+                    <div class="verse-number">6</div>
+                    <div class="verse-controls">
+                        <button class="play-btn" onclick="playVerse(1, 6)" id="btn-1-6">▶️ เล่น</button>
+                    </div>
+                </div>
                 <div class="verse-arabic">اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ</div>
+                <div class="verse-transliteration-thai">อิหดินัษ ศิรอฏัล มุสตะกีม</div>
                 <div class="verse-transliteration">Ihdinash shiratal mustaqeem</div>
                 <div class="verse-translation">ขอทรงนำทางข้าพเจ้าทั้งหลายสู่ทางที่ตรง</div>
             </div>
 
             <div class="verse-container">
-                <div class="verse-number">7</div>
+                <div class="verse-header">
+                    <div class="verse-number">7</div>
+                    <div class="verse-controls">
+                        <button class="play-btn" onclick="playVerse(1, 7)" id="btn-1-7">▶️ เล่น</button>
+                    </div>
+                </div>
                 <div class="verse-arabic">صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ</div>
+                <div class="verse-transliteration-thai">ศิรอฏัลละซีน่ะ อันอัมต่ะ อะลัยฮิม ไฆริล มัฆฎูบิ อะลัยฮิม วะลัด ฎอลลีน</div>
                 <div class="verse-transliteration">Shiratallazeena an'amta alayhim ghayril maghdoobi alayhim walad dalleen</div>
                 <div class="verse-translation">ทางของบรรดาผู้ที่พระองค์ทรงประทานพระคุณแก่พวกเขา ไม่ใช่ทางของผู้ที่ถูกพระพิโรธ และไม่ใช่ทางของผู้หลงทาง</div>
-            </div>
-        </div>
-
-        <div class="content-section">
-            <h2 class="section-title">🎵 การอ่าน</h2>
-            <div class="audio-section">
-                <p style="margin-bottom: 15px; color: var(--text-secondary);">ฟังการอ่านซูเราะห์อัลฟาติหะห์</p>
-                <button class="play-btn" onclick="playAudio()">▶️ เล่นเสียงอ่าน</button>
-                <p style="margin-top: 10px; font-size: 0.9rem; color: var(--text-muted);">
-                    * ในระบบจริงจะมีเสียงอ่านจากกอรี่ที่มีชื่อเสียง
-                </p>
             </div>
         </div>
 
@@ -477,12 +577,12 @@
                     <h3 style="color: #3498db; margin-bottom: 10px;">📍 บริบท</h3>
                     <p>ซูเราะห์นี้ประทานลงมาในช่วงแรกของการเผยแผ่ศาสนา เป็นการสอนมุสลิมให้รู้จักการขอพรและการสรรเสริญอัลลอฮ์</p>
                 </div>
-
+                
                 <div style="background: var(--bg-card); padding: 20px; border-radius: 10px; border-left: 4px solid #e67e22;">
                     <h3 style="color: #e67e22; margin-bottom: 10px;">🎯 หลักธรรม</h3>
                     <p>ครอบคลุมหลักสำคัญ 3 ประการ: การเชื่อมั่นในอัลลอฮ์, การเคารพบูชา, และการขอทรงนำทางในชีวิต</p>
                 </div>
-
+                
                 <div style="background: var(--bg-card); padding: 20px; border-radius: 10px; border-left: 4px solid #27ae60;">
                     <h3 style="color: #27ae60; margin-bottom: 10px;">🔗 การใช้งาน</h3>
                     <p>อ่านในการละหมาดทุกรอบ, การเริ่มต้นงานสำคัญ, และเป็นการขอพรในชีวิตประจำวัน</p>
@@ -497,11 +597,163 @@
     </div>
 
     <script>
+        // ระบบเสียงอัลกุรอ่าน
+        let currentAudio = null;
+        let isPlayingAll = false;
+        
+        // ใช้เฉพาะเสียง Mishary Alafasy
+        const baseURL = 'https://www.everyayah.com/data/Alafasy_128kbps/';
+
+        // ฟังก์ชันแสดงสถานะ
+        function updateStatus(message) {
+            const statusEl = document.getElementById('audioStatus');
+            if (statusEl) {
+                statusEl.textContent = message;
+                setTimeout(() => {
+                    if (statusEl.textContent === message) {
+                        statusEl.textContent = '';
+                    }
+                }, 8000);
+            }
+        }
+
+        // ฟังก์ชันเล่นเสียงแต่ละอายะห์
+        function playVerse(surahNum, verseNum) {
+            stopAllAudio();
+            
+            const surahStr = surahNum.toString().padStart(3, '0');
+            const verseStr = verseNum.toString().padStart(3, '0');
+            const audioURL = `${baseURL}${surahStr}${verseStr}.mp3`;
+            const btnId = `btn-${surahNum}-${verseNum}`;
+            const btn = document.getElementById(btnId);
+            
+            btn.textContent = '🔄 โหลด...';
+            btn.disabled = true;
+            updateStatus(`กำลังโหลดอายะห์ที่ ${verseNum}...`);
+            
+            currentAudio = new Audio(audioURL);
+            
+            currentAudio.addEventListener('canplay', () => {
+                btn.textContent = '⏸️ เล่น';
+                updateStatus(`กำลังเล่นอายะห์ที่ ${verseNum} โดย Mishary Alafasy`);
+                currentAudio.play().catch(e => {
+                    console.log('Play error:', e);
+                    btn.textContent = '❌ ข้อผิดพลาด';
+                    updateStatus('ไม่สามารถเล่นเสียงได้ - ตรวจสอบการเชื่อมต่อ');
+                    setTimeout(() => {
+                        btn.textContent = '▶️ เล่น';
+                        btn.disabled = false;
+                    }, 3000);
+                });
+            });
+            
+            currentAudio.addEventListener('ended', () => {
+                btn.textContent = '▶️ เล่น';
+                btn.disabled = false;
+                updateStatus('เล่นเสร็จแล้ว');
+                currentAudio = null;
+            });
+            
+            currentAudio.addEventListener('error', (e) => {
+                console.log('Audio error:', e);
+                btn.textContent = '❌ ข้อผิดพลาด';
+                updateStatus('ไม่สามารถโหลดเสียงได้ - ลองใหม่อีกครั้ง');
+                setTimeout(() => {
+                    btn.textContent = '▶️ เล่น';
+                    btn.disabled = false;
+                }, 3000);
+                currentAudio = null;
+            });
+            
+            currentAudio.load();
+        }
+
+        // ฟังก์ชันเล่นทั้งซูเราะห์
+        function playAllVerses() {
+            if (isPlayingAll) {
+                stopAllAudio();
+                return;
+            }
+            
+            isPlayingAll = true;
+            const playAllBtn = document.getElementById('playAllBtn');
+            playAllBtn.textContent = '⏹️ หยุด';
+            playAllBtn.style.background = '#dc3545';
+            
+            let currentVerse = 1;
+            const totalVerses = 7;
+            
+            updateStatus('เริ่มเล่นทั้งซูเราะห์...');
+            
+            function playNext() {
+                if (!isPlayingAll || currentVerse > totalVerses) {
+                    playAllBtn.textContent = '▶️ เล่นทั้งซูเราะห์';
+                    playAllBtn.style.background = '';
+                    isPlayingAll = false;
+                    updateStatus('เล่นทั้งซูเราะห์เสร็จแล้ว');
+                    return;
+                }
+                
+                const surahStr = '001';
+                const verseStr = currentVerse.toString().padStart(3, '0');
+                const audioURL = `${baseURL}${surahStr}${verseStr}.mp3`;
+                
+                updateStatus(`กำลังเล่นอายะห์ที่ ${currentVerse} จาก ${totalVerses}`);
+                
+                currentAudio = new Audio(audioURL);
+                
+                currentAudio.addEventListener('canplay', () => {
+                    currentAudio.play().catch(() => {
+                        currentVerse++;
+                        setTimeout(playNext, 500);
+                    });
+                });
+                
+                currentAudio.addEventListener('ended', () => {
+                    currentVerse++;
+                    setTimeout(playNext, 1000); // หยุด 1 วินาที
+                });
+                
+                currentAudio.addEventListener('error', () => {
+                    currentVerse++;
+                    setTimeout(playNext, 500);
+                });
+                
+                currentAudio.load();
+            }
+            
+            playNext();
+        }
+
+        // ฟังก์ชันหยุดเสียงทั้งหมด
+        function stopAllAudio() {
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio = null;
+            }
+            
+            isPlayingAll = false;
+            const playAllBtn = document.getElementById('playAllBtn');
+            playAllBtn.textContent = '▶️ เล่นทั้งซูเราะห์';
+            playAllBtn.style.background = '';
+            
+            // รีเซ็ตปุ่มทั้งหมด
+            for (let i = 1; i <= 7; i++) {
+                const btn = document.getElementById(`btn-1-${i}`);
+                if (btn) {
+                    btn.textContent = '▶️ เล่น';
+                    btn.disabled = false;
+                }
+            }
+            
+            updateStatus('หยุดเล่นแล้ว');
+        }
+
         // ระบบ Dark/Light Theme
         function toggleTheme() {
             const currentTheme = document.documentElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
+            
             document.documentElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
             updateThemeButton(newTheme);
@@ -510,7 +762,7 @@
         function updateThemeButton(theme) {
             const themeIcon = document.getElementById('theme-icon');
             const themeText = document.getElementById('theme-text');
-
+            
             if (theme === 'dark') {
                 themeIcon.textContent = '☀️';
                 themeText.textContent = 'โหมดสว่าง';
@@ -527,34 +779,16 @@
             updateThemeButton(savedTheme);
         }
 
-        // เล่นเสียง (จำลอง)
-        function playAudio() {
-            const btn = document.querySelector('.play-btn');
-            btn.textContent = '⏸️ กำลังเล่น...';
-            btn.disabled = true;
-
-            // จำลองการเล่นเสียง 3 วินาที
-            setTimeout(() => {
-                btn.textContent = '▶️ เล่นเสียงอ่าน';
-                btn.disabled = false;
-                alert('🎵 ในระบบจริงจะมีเสียงอ่านจากกอรี่ที่มีชื่อเสียง');
-            }, 3000);
-        }
-
-        // Smooth scroll for better UX
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
         // เรียกใช้เมื่อหน้าเว็บโหลดเสร็จ
         document.addEventListener('DOMContentLoaded', function() {
             loadSavedTheme();
-            console.log('✅ โหลดซูเราะห์อัลฟาติหะห์เรียบร้อยแล้ว');
+            updateStatus('พร้อมใช้งาน - คลิกปุ่มเล่นเพื่อฟังเสียงอ่าน');
+            console.log('✅ โหลดซูเราะห์อัลฟาติหะห์พร้อมระบบเสียงเรียบร้อยแล้ว');
+        });
+
+        // หยุดเสียงเมื่อออกจากหน้า
+        window.addEventListener('beforeunload', function() {
+            stopAllAudio();
         });
     </script>
 </body>
